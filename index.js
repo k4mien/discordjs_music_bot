@@ -25,6 +25,19 @@ fs.readdirSync(`./handlers`).forEach((file) => {
   require(`./handlers/${file}`)(client);
 });
 
+client.on("stateChange", (oldState, newState) => {
+  const oldNetworking = Reflect.get(oldState, "networking");
+  const newNetworking = Reflect.get(newState, "networking");
+
+  const networkStateChangeHandler = () => {
+    const newUdp = Reflect.get(newNetworkState, "udp");
+    clearInterval(newUdp?.keepAliveInterval);
+  };
+
+  oldNetworking?.off("stateChange", networkStateChangeHandler);
+  newNetworking?.on("stateChange", networkStateChangeHandler);
+});
+
 client.on("error", (error) => console.log(error));
 client.on("warn", (info) => console.log(info));
 process.on("unhandledRejection", (error) => console.log(error));
