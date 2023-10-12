@@ -1,5 +1,4 @@
 # distube_music_bot
-https://github.com/k4mien/distube_music_bot/edit/main/README.md
 Discord Bot for playing music from yt/spotify/soundcloud and other platforms.
 
 This bot is using prefix.
