@@ -3,6 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = async function (client, message) {
   if (message.author.bot || !message.guild) return;
   const prefix = message.client.prefix;
+  console.log(prefix);
   if (!message.content.startsWith(prefix)) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
