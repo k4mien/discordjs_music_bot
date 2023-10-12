@@ -12,7 +12,7 @@ How to setup bot?
 
 (After you created your own bot at discord dev page and granted permissions, invite your bot to the server)
 
-Clone the repository
-Change config.json.example to config.json and change TOKEN and CLIENTID.
-Start docker with docker-compose -d up
-Enjoy music.
+1. Clone the repository
+2. Change config.json.example to config.json and change TOKEN and CLIENTID.
+3. Start docker with docker-compose -d up
+4. Enjoy music.
