@@ -4,8 +4,7 @@ Discord Bot for playing music from yt/spotify/soundcloud and other platforms.
 This bot is using prefix.
 
 To Do:
-
-fix queue list for more than 4096 char.
+- fix queue list for more than 4096 char.
 
 How to setup bot?
 
