@@ -3,7 +3,8 @@
 .gitignore
 #docker
 Dockerfile-dev
+docker-compose
 #readme
 README.md
 #node
-/src/node_modules
+node_modules
