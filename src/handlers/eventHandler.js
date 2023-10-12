@@ -7,7 +7,7 @@ const handleEvents = (client) => {
   for (const file of events) {
     let eventName = file.split(".")[0];
     const event = require(`${process.cwd()}/events/${file}`);
-    console.log(`Loading Events ${eventName}`);
+    console.log(`Loading Event: ${eventName}`);
     client.on(eventName, event.bind(null, client));
   }
 };

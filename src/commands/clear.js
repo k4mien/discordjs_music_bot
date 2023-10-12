@@ -1,11 +1,25 @@
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
   name: "clear",
   inVoiceChannel: true,
   run: async (client, message) => {
     const queue = client.distube.getQueue(message);
     if (!queue)
-      return message.channel.send(`There is nothing in the queue right now!`);
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("There is nothing in the queue right now!"),
+        ],
+      });
     queue.stop();
-    message.channel.send(`Cleared all songs in queue!`);
+    return message.channel.send({
+      embeds: [
+        new EmbedBuilder()
+          .setColor("Blue")
+          .setDescription("Cleared all songs in the queue!"),
+      ],
+    });
   },
 };

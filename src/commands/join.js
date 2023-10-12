@@ -1,21 +1,42 @@
-const { Constants } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "join",
-  aliases: ["move"],
-  run: async (client, message, args) => {
+  run: async (client, message) => {
     let voiceChannel = message.member.voice.channel;
-    if (args[0]) {
-      voiceChannel = await client.channels.fetch(args[0]);
-      if (!Constants.VoiceBasedChannelTypes.includes(voiceChannel?.type)) {
-        return message.channel.send(`${args[0]} is not a valid voice channel!`);
+    const botMember = message.guild.members.cache.get(message.client.user.id);
+
+    if (!voiceChannel) {
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("You have to be in a voice channel!"),
+        ],
+      });
+    } else if (!botMember.voice?.channelId) {
+      client.distube.voices.join(voiceChannel);
+      return message.channel.send({
+        embeds: [new EmbedBuilder().setColor("Blue").setDescription("Joined!")],
+      });
+    } else if (botMember.voice?.channelId) {
+      const botVoiceChannelId = botMember.voice.channelId;
+      if (voiceChannel?.id != botVoiceChannelId) {
+        client.distube.voices.join(voiceChannel);
+        return message.channel.send({
+          embeds: [
+            new EmbedBuilder().setColor("Blue").setDescription("Joined!"),
+          ],
+        });
+      } else {
+        return message.channel.send({
+          embeds: [
+            new EmbedBuilder()
+              .setColor("Blue")
+              .setDescription("I'm already in this channel"),
+          ],
+        });
       }
     }
-    if (!voiceChannel) {
-      return message.channel.send(
-        `You must be in a voice channel or enter a voice channel id!`
-      );
-    }
-    client.distube.voices.join(voiceChannel);
   },
 };

@@ -10,7 +10,7 @@ const handleCommands = (client) => {
     .filter((file) => file.endsWith(".js"));
   for (const file of commands) {
     const command = require(`${process.cwd()}/commands/${file}`);
-    console.log(`Loaded ${file}`);
+    console.log(`Loading Command: ${file}`);
     client.commands.set(command.name, command);
     if (command.aliases)
       command.aliases.forEach((alias) =>

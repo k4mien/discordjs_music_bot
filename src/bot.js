@@ -1,12 +1,22 @@
+const { Client, GatewayIntentBits } = require("discord.js");
+const { prefix, token } = require("./config.json");
 const { DisTube } = require("distube");
 const fs = require("fs");
 const { EmbedBuilder } = require("discord.js");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
-const client = require("./discord");
 
-const distube = new DisTube(client, {
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.MessageContent,
+  ],
+});
+
+client.distube = new DisTube(client, {
   searchSongs: 0,
   leaveOnStop: false,
   leaveOnEmpty: true,
@@ -29,7 +39,7 @@ const distube = new DisTube(client, {
   ],
 });
 
-distube
+client.distube
   .on("addList", (queue, playlist) => {
     const embed = new EmbedBuilder().setColor("Blue").setDescription(
       `**[${playlist.name}](${playlist.url})** playlist has been added to the queue.
@@ -68,4 +78,7 @@ distube
     queue.volume = 100;
   });
 
-module.exports = distube;
+client.prefix = prefix;
+client.login(token);
+
+module.exports = client;

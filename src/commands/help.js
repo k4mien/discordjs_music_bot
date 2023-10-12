@@ -1,18 +1,18 @@
-const Discord = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "help",
-  aliases: ["h", "cmd", "command"],
-  data: new Discord.SlashCommandBuilder()
-    .setName("help")
-    .setDescription("Show all available commands"),
+  aliases: ["h"],
   run: async (client, message) => {
-    const embed = new Discord.EmbedBuilder()
-      .setColor("Blue")
-      .setTitle("Commands")
-      .setDescription(
-        client.commands.map((cmd) => `\`${cmd.name}\``).join(", ")
-      );
-    message.channel.send({ embeds: [embed] });
+    return message.channel.send({
+      embeds: [
+        new EmbedBuilder()
+          .setColor("Blue")
+          .setTitle("Commands")
+          .setDescription(
+            client.commands.map((cmd) => `\`${cmd.name}\``).join("\n")
+          ),
+      ],
+    });
   },
 };

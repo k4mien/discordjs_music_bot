@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  name: "forward",
-  aliases: ["f"],
+  name: "remove",
+  aliases: ["rm"],
   inVoiceChannel: true,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);
@@ -19,12 +19,12 @@ module.exports = {
         embeds: [
           new EmbedBuilder()
             .setColor("Blue")
-            .setDescription("Please provide time in seconds!"),
+            .setDescription("Please enter a song position!"),
         ],
       });
     }
-    const time = Number(args[0]);
-    if (isNaN(time) || time <= 0)
+    const position = Number(args[0]);
+    if (isNaN(position)) {
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
@@ -32,13 +32,23 @@ module.exports = {
             .setDescription("Please enter a valid number!"),
         ],
       });
-    await queue.seek(queue.currentTime + time);
-    return message.channel.send({
-      embeds: [
-        new EmbedBuilder()
-          .setColor("Blue")
-          .setDescription(`Forwarded the song for ${time} seconds!`),
-      ],
-    });
+    } else if (!(position > 0 && position <= queue.songs.length - 1)) {
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("There is no song at this position!"),
+        ],
+      });
+    } else {
+      queue.songs.splice(position, 1);
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("Song removed from the queue!"),
+        ],
+      });
+    }
   },
 };

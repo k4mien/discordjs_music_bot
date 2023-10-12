@@ -1,3 +1,5 @@
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
   name: "pause",
   aliases: ["pause", "hold"],
@@ -5,12 +7,30 @@ module.exports = {
   run: async (client, message) => {
     const queue = client.distube.getQueue(message);
     if (!queue)
-      return message.channel.send(`There is nothing in the queue right now!`);
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("There is nothing in the queue right now!"),
+        ],
+      });
     if (queue.paused) {
-      queue.resume();
-      return message.channel.send("Resumed the song for you :)");
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("The current song is already paused"),
+        ],
+      });
+    } else {
+      queue.pause();
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor("Blue")
+            .setDescription("Paused the song for you :)"),
+        ],
+      });
     }
-    queue.pause();
-    message.channel.send("Paused the song for you :)");
   },
 };
