@@ -3,6 +3,8 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "skip",
   aliases: ["s"],
+  description: "Skip the current song",
+  options: "",
   inVoiceChannel: true,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);

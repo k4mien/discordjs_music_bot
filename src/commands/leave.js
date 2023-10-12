@@ -2,6 +2,8 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "leave",
+  description: "Disconnect bot from the channel",
+  options: "",
   run: async (client, message) => {
     const voiceChannel = message.member.voice.channel;
     const botMember = message.guild.members.cache.get(message.client.user.id);

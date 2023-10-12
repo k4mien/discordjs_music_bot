@@ -2,7 +2,8 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "pause",
-  aliases: ["pause", "hold"],
+  description: "Pause the queue",
+  options: "",
   inVoiceChannel: true,
   run: async (client, message) => {
     const queue = client.distube.getQueue(message);

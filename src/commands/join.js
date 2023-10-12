@@ -2,6 +2,8 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "join",
+  description: "Connect bot to the channel",
+  options: "",
   run: async (client, message) => {
     let voiceChannel = message.member.voice.channel;
     const botMember = message.guild.members.cache.get(message.client.user.id);

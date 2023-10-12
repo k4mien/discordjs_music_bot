@@ -2,6 +2,8 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "resume",
+  description: "Resume the queue",
+  options: "",
   inVoiceChannel: true,
   run: async (client, message) => {
     const queue = client.distube.getQueue(message);

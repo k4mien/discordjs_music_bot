@@ -3,6 +3,8 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "remove",
   aliases: ["rm"],
+  description: "Remove a song from the queue",
+  options: "[number]",
   inVoiceChannel: true,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);

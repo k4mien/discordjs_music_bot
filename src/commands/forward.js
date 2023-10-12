@@ -3,6 +3,8 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "forward",
   aliases: ["f"],
+  description: "Forward the current song",
+  options: "[number]",
   inVoiceChannel: true,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);

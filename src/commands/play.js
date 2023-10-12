@@ -3,6 +3,8 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "play",
   aliases: ["p"],
+  options: "[url|text]",
+  description: "Play a song or playlist",
   inVoiceChannel: true,
   run: async (client, message, args) => {
     const voiceChannel = message.member.voice.channel;
