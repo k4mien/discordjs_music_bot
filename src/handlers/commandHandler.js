@@ -1,7 +1,7 @@
 const { Collection } = require("discord.js");
 const fs = require("fs");
 
-module.exports = async (client) => {
+const handleCommands = (client) => {
   client.commands = new Collection();
   client.aliases = new Collection();
 
@@ -18,3 +18,5 @@ module.exports = async (client) => {
       );
   }
 };
+
+module.exports = handleCommands;
