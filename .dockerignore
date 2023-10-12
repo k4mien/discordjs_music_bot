@@ -1,0 +1,9 @@
+#git
+.git
+.gitignore
+#docker
+Dockerfile-dev
+#readme
+README.md
+#node
+node_modules 

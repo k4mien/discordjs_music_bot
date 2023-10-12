@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  discord-music-bot:
+    environment:
+      - NODE_ENV=development
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./src:/app
+      - /app/node_modules
+    container_name: dc-docker
+    command: npm start
