@@ -1,5 +1,5 @@
 # distube_music_bot
-
+https://github.com/k4mien/distube_music_bot/edit/main/README.md
 Discord Bot for playing music from yt/spotify/soundcloud and other platforms.
 
 This bot is using prefix.
@@ -7,6 +7,7 @@ This bot is using prefix.
 To Do:
 
 fix queue list for more than 4096 char.
+
 How to setup bot?
 
 (After you created your own bot at discord dev page and granted permissions, invite your bot to the server)
