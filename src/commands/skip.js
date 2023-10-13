@@ -17,14 +17,14 @@ module.exports = {
         ],
       });
     if (queue.songs.length == 1) {
-      queue.stop();
+      await queue.stop();
       return message.channel.send({
         embeds: [
           new EmbedBuilder().setColor("Blue").setDescription("Song skipped!"),
         ],
       });
     } else {
-      queue.skip();
+      await queue.skip();
       return message.channel.send({
         embeds: [
           new EmbedBuilder().setColor("Blue").setDescription("Song skipped!"),

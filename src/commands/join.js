@@ -17,14 +17,14 @@ module.exports = {
         ],
       });
     } else if (!botMember.voice?.channelId) {
-      client.distube.voices.join(voiceChannel);
+      await client.distube.voices.join(voiceChannel);
       return message.channel.send({
         embeds: [new EmbedBuilder().setColor("Blue").setDescription("Joined!")],
       });
     } else if (botMember.voice?.channelId) {
       const botVoiceChannelId = botMember.voice.channelId;
       if (voiceChannel?.id != botVoiceChannelId) {
-        client.distube.voices.join(voiceChannel);
+        await client.distube.voices.join(voiceChannel);
         return message.channel.send({
           embeds: [
             new EmbedBuilder().setColor("Blue").setDescription("Joined!"),

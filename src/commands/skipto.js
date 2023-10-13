@@ -42,14 +42,14 @@ module.exports = {
         ],
       });
     } else if (queue.songs.length == 1) {
-      queue.stop();
+      await queue.stop();
       return message.channel.send({
         embeds: [
           new EmbedBuilder().setColor("Blue").setDescription("Song skipped!"),
         ],
       });
     } else {
-      queue.jump(position);
+      await queue.jump(position);
       return message.channel.send({
         embeds: [
           new EmbedBuilder().setColor("Blue").setDescription("Song skipped!"),

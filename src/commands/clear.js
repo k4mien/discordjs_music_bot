@@ -15,7 +15,7 @@ module.exports = {
             .setDescription("There is nothing in the queue right now!"),
         ],
       });
-    queue.stop();
+    await queue.stop();
     return message.channel.send({
       embeds: [
         new EmbedBuilder()

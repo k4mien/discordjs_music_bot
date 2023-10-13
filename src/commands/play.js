@@ -18,7 +18,7 @@ module.exports = {
         ],
       });
     try {
-      client.distube.play(voiceChannel, query, {
+      await client.distube.play(voiceChannel, query, {
         member: message.member,
         textChannel: message.channel,
         message,

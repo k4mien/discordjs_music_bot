@@ -24,7 +24,7 @@ module.exports = {
         ],
       });
     } else {
-      queue.pause();
+      await queue.pause();
       return message.channel.send({
         embeds: [
           new EmbedBuilder()

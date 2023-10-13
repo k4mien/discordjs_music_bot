@@ -43,7 +43,7 @@ module.exports = {
         ],
       });
     } else {
-      queue.songs.splice(position, 1);
+      await queue.songs.splice(position, 1);
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
