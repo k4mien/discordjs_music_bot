@@ -56,10 +56,6 @@ module.exports = {
     });
 
     collector.on("collect", (interaction) => {
-      if (currentPage == 0) {
-        previousButton.setDisabled(true);
-        interaction.update({ components: [buttonRow] });
-      }
       if (interaction.customId === "next-button") {
         if (currentPage < embeds.length - 1) {
           currentPage += 1;
