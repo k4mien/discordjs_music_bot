@@ -56,7 +56,10 @@ client.distube
     queue.textChannel.send({ embeds: [embed] });
   })
   .on("empty", (queue) => {
-    queue.textChannel.send("Channel is empty. Disconnected!");
+    const embed = new EmbedBuilder()
+      .setColor("Blue")
+      .setDescription("Channel is empty. Disconnected!");
+    queue.textChannel.send({ embeds: [embed] });
   })
   .on("error", (channel, e) => {
     if (channel)

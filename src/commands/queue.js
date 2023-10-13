@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require("discord.js");
 const {
-  ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  ActionRowBuilder,
   ComponentType,
 } = require("discord.js");
 
@@ -22,67 +22,96 @@ module.exports = {
         ],
       });
 
-    const previousPage = new ButtonBuilder()
-      .setLabel("<--")
+    const previousButton = new ButtonBuilder()
+      .setLabel("Previous")
       .setStyle(ButtonStyle.Primary)
-      .setCustomId("btnPrevious");
+      .setCustomId("previous-button")
+      .setDisabled(true);
 
-    const nextPage = new ButtonBuilder()
-      .setLabel("-->")
+    const nextButton = new ButtonBuilder()
+      .setLabel("Next")
       .setStyle(ButtonStyle.Primary)
-      .setCustomId("btnNext");
+      .setCustomId("next-button");
 
     const buttonRow = new ActionRowBuilder().addComponents(
-      previousPage,
-      nextPage
+      previousButton,
+      nextButton
     );
 
-    const embed = new EmbedBuilder()
-      .setTitle("In Queue\n\n")
-      .setColor("Blue")
-      .setDescription("tmp");
+    let currentPage = 0;
 
-    const reply = await message.channel.send({
-      embeds: [embed],
+    const embeds = embedGenerator(queue);
+
+    const queueEmbed = await message.channel.send({
+      embeds: [embeds[currentPage]],
       components: [buttonRow],
     });
 
     const filter = (i) => i.user.id === message.author.id;
 
-    const collector = reply.createMessageComponentCollector({
+    const collector = queueEmbed.createMessageComponentCollector({
       componentType: ComponentType.Button,
       filter,
+      //time: 10_000
     });
 
     collector.on("collect", (interaction) => {
-      if (interaction.customId === "btnPrevious") {
-        // generate previous embed with previous songs in the queue, if 1st page, then do nothing
-        return;
+      if (currentPage == 0) {
+        previousButton.setDisabled(true);
+        interaction.update({ components: [buttonRow] });
       }
-      if (interaction.customId === "btnNext") {
-        // generate next embed with next songs in the queue, if last page, then do nothing
-        return;
+      if (interaction.customId === "next-button") {
+        if (currentPage < embeds.length - 1) {
+          currentPage += 1;
+          interaction.update({
+            embeds: [embeds[currentPage]],
+            components: [buttonRow],
+          });
+        }
+      } else if (interaction.customId === "previous-button") {
+        if (currentPage !== 0) {
+          currentPage -= 1;
+          interaction.update({
+            embeds: [embeds[currentPage]],
+            components: [buttonRow],
+          });
+        }
       }
     });
 
     collector.on("end", () => {
-      previousPage.setDisabled(true);
-      nextPage.setDisabled(true);
+      previousButton.setDisabled(true);
+      nextButton.setDisabled(true);
 
-      reply.edit({
-        content: "test",
+      queueEmbed.edit({
         components: [buttonRow],
       });
     });
-    // const q = queue.songs
-    //   .map(
-    //     (song, i) =>
-    //       `${i === 0 ? "**Now Playing:**" : `${i}.`} [${song.name}](${
-    //         song.url
-    //       }) - \`[${song.formattedDuration}]\`, added by: **${
-    //         song.user.displayName
-    //       }**\n`
-    //   )
-    //   .join("\n");
   },
 };
+
+function embedGenerator(queue) {
+  const embeds = [];
+  let songs = 16;
+  for (let i = 0; i < queue.songs.length; i += 15) {
+    const current = queue.songs.slice(i + 1, songs);
+    songs += 15;
+    let j = i;
+    const info = current
+      .map(
+        (song) =>
+          `${++j}.[ ${song.name}](${song.url}) - \`[${
+            song.formattedDuration
+          }]\`, added by: **${song.user.displayName}**`
+      )
+      .join("\n");
+    const msg = new EmbedBuilder()
+      .setTitle("In Queue:\n\n")
+      .setColor("Blue")
+      .setDescription(
+        `**Now Playing:** [${queue.songs[0].name}](${queue.songs[0].url}) - \`[${queue.songs[0].formattedDuration}]\`, added by: **${queue.songs[0].user.displayName}**\n\n${info}`
+      );
+    embeds.push(msg);
+  }
+  return embeds;
+}
