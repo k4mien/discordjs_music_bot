@@ -62,14 +62,17 @@ client.distube
     queue.textChannel.send({ embeds: [embed] });
   })
   .on("error", (channel, e) => {
-    if (channel)
-      channel.send(`An error encountered: ${e.toString().slice(0, 1974)}`);
-    else console.error(e);
+    if (channel) {
+      const embed = new EmbedBuilder()
+        .setColor("Blue")
+        .setDescription(`An error encountered: ${e.toString().slice(0, 1974)}`);
+      channel.send({ embeds: [embed] });
+    } else console.error(e);
   })
   .on("playSong", (queue, song) => {
     const embed = new EmbedBuilder()
       .setColor("Blue")
-      .setTitle("Playing")
+      .setTitle("Now Playing")
       .setDescription(
         `[${song.name}](${song.url}) - \`[${song.formattedDuration}]\``
       )
