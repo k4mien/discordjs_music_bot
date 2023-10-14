@@ -22,25 +22,26 @@ module.exports = {
         ],
       });
 
+    let currentPage = 0;
+
+    const embeds = embedGenerator(queue);
+
     const previousButton = new ButtonBuilder()
       .setLabel("Previous")
       .setStyle(ButtonStyle.Primary)
       .setCustomId("previous-button")
-      .setDisabled(true);
+      .setDisabled(currentPage == 0 ? true : false);
 
     const nextButton = new ButtonBuilder()
       .setLabel("Next")
       .setStyle(ButtonStyle.Primary)
-      .setCustomId("next-button");
+      .setCustomId("next-button")
+      .setDisabled(currentPage == 0 && embeds.length == 1 ? true : false);
 
     const buttonRow = new ActionRowBuilder().addComponents(
       previousButton,
       nextButton
     );
-
-    let currentPage = 0;
-
-    const embeds = embedGenerator(queue);
 
     const queueEmbed = await message.channel.send({
       embeds: [embeds[currentPage]],
@@ -52,25 +53,43 @@ module.exports = {
     const collector = queueEmbed.createMessageComponentCollector({
       componentType: ComponentType.Button,
       filter,
-      //time: 10_000
+      time: 30000,
     });
 
     collector.on("collect", (interaction) => {
       if (interaction.customId === "next-button") {
         if (currentPage < embeds.length - 1) {
           currentPage += 1;
-          interaction.update({
-            embeds: [embeds[currentPage]],
-            components: [buttonRow],
-          });
+          if (currentPage == embeds.length - 1) {
+            nextButton.setDisabled(true);
+            interaction.update({
+              embeds: [embeds[currentPage]],
+              components: [buttonRow],
+            });
+          } else {
+            previousButton.setDisabled(false);
+            interaction.update({
+              embeds: [embeds[currentPage]],
+              components: [buttonRow],
+            });
+          }
         }
       } else if (interaction.customId === "previous-button") {
         if (currentPage !== 0) {
           currentPage -= 1;
-          interaction.update({
-            embeds: [embeds[currentPage]],
-            components: [buttonRow],
-          });
+          if (currentPage == 0) {
+            previousButton.setDisabled(true);
+            interaction.update({
+              embeds: [embeds[currentPage]],
+              components: [buttonRow],
+            });
+          } else {
+            nextButton.setDisabled(false);
+            interaction.update({
+              embeds: [embeds[currentPage]],
+              components: [buttonRow],
+            });
+          }
         }
       }
     });
