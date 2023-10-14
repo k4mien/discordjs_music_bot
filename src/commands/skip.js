@@ -23,6 +23,14 @@ module.exports = {
           new EmbedBuilder().setColor("Blue").setDescription("Song skipped!"),
         ],
       });
+    } else if (queue.songs.length == 1 && queue.repeatMode == 1) {
+      queue.setRepeatMode(0);
+      await queue.stop();
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder().setColor("Blue").setDescription("Song skipped!"),
+        ],
+      });
     } else {
       await queue.skip();
       return message.channel.send({

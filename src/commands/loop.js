@@ -1,7 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
 
-mode = null;
-
 module.exports = {
   name: "loop",
   description: "Loop the current song",
@@ -10,7 +8,6 @@ module.exports = {
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);
     if (!queue) {
-      mode = null;
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
@@ -20,13 +17,16 @@ module.exports = {
       });
     }
 
+    let mode = null;
+
     if (!args[0]) {
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
             .setColor("Blue")
             .setDescription(
-              "The current loop mode is: " + (mode == 1 ? "on" : "off")
+              "The current loop mode is: " +
+                (queue.repeatMode == 1 ? "on" : "off")
             ),
         ],
       });
@@ -42,7 +42,7 @@ module.exports = {
     }
 
     if (mode != null) {
-      mode = queue.setRepeatMode(mode);
+      queue.setRepeatMode(mode);
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
