@@ -6,5 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-prod
+    network_mode: "host"
     container_name: dc-docker
     command: npm start
