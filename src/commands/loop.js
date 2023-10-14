@@ -1,5 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 
+mode = null;
+
 module.exports = {
   name: "loop",
   description: "Loop the current song",
@@ -7,7 +9,8 @@ module.exports = {
   inVoiceChannel: true,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);
-    if (!queue)
+    if (!queue) {
+      mode = null;
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
@@ -15,8 +18,7 @@ module.exports = {
             .setDescription("There is nothing in the queue right now!"),
         ],
       });
-
-    let mode = null;
+    }
 
     if (!args[0]) {
       return message.channel.send({
