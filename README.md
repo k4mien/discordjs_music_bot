@@ -1,18 +1,25 @@
-# distube_music_bot
-
+# Distube Music Bot
 Discord Bot for playing music from yt/spotify/soundcloud and other platforms.
 
-This bot is using prefix.
+## Features
+- prefix
+- yt/spotify/soundcloud native support
+- easy to setup
+- using distube, large community
 
-To Do:
-
+## To Do
 - more features?
 
-How to setup bot?
+## How to setup bot?
+First of all, you should create your own bot at discord dev page with permissions, then invite him to the server.
 
-(After you created your own bot at discord dev page and granted permissions, invite your bot to the server)
-
-1. Clone the repository
-2. Change config.json.example to config.json and change TOKEN and CLIENTID.
-3. Start docker with docker-compose -d up
-4. Enjoy music.
+```
+$ git clone [repo]
+$ cd [repo]
+$ cd src
+$ mv config-example.json config.json
+$ vim config.json <- change TOKEN and CLIENTID for your own
+$ cd ..
+$ docker compose up
+```
+Done, your bot should be running and ready to play music!
