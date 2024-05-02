@@ -20,6 +20,6 @@ $ cd src
 $ mv config-example.json config.json
 $ vim config.json <- change TOKEN and CLIENTID for your own
 $ cd ..
-$ docker compose up
+$ docker compose -f docker-compose-prod up
 ```
 Done, your bot should be running and ready to play music!
